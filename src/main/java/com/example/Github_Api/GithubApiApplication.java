@@ -9,7 +9,6 @@ public class GithubApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GithubApiApplication.class, args);
 
-
 	}
 
 }

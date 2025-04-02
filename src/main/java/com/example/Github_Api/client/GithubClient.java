@@ -1,5 +1,6 @@
 package com.example.Github_Api.client;
 
+import com.example.Github_Api.model.GithubBranch;
 import com.example.Github_Api.model.GithubRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -12,8 +13,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class GithubClient {
-    private RestTemplate restTemplate = new RestTemplate();
-    private static String GITHUB_API_URL = "https://api.github.com";
+    private final RestTemplate restTemplate = new RestTemplate();
+    private static final  String GITHUB_API_URL = "https://api.github.com";
 
     // example: https://api.github.com/users/octocat/repos
     public List<GithubRepository> getRepositories(String username) {
@@ -31,5 +32,11 @@ public class GithubClient {
         } catch (Exception e) {
             return null;
         }
+    }
+    public List<GithubBranch> getBranches(String owner, String repoName) {
+        String url = GITHUB_API_URL + "/repos/" + owner + "/" + repoName + "/branches";
+        GithubBranch[] branches = restTemplate.getForObject(url, GithubBranch[].class);
+        if(branches == null) return null;
+        return Arrays.asList(branches);
     }
 }
